@@ -1,5 +1,6 @@
 package com.web.mindtrackproject.controller;
 
+import com.web.mindtrackproject.command.CommandInvoker;
 import com.web.mindtrackproject.entity.Note;
 import com.web.mindtrackproject.service.NoteService;
 import lombok.AllArgsConstructor;
@@ -15,6 +16,7 @@ import java.util.Optional;
 @AllArgsConstructor
 public class NoteController {
     private final NoteService noteService;
+    private final CommandInvoker commandInvoker;
 
     @PostMapping
     public ResponseEntity<Note> createNote(@RequestBody Note note) {
@@ -24,7 +26,8 @@ public class NoteController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteNote(@PathVariable Long id) {
-        noteService.deleteNote(id);
+        noteService.deleteNoteWithConfirmation(id);
+        commandInvoker.executeCommands();
         return ResponseEntity.noContent().build();
     }
 
