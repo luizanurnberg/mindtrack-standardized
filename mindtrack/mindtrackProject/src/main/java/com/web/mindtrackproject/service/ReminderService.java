@@ -2,6 +2,7 @@ package com.web.mindtrackproject.service;
 
 import com.web.mindtrackproject.entity.Reminder;
 import com.web.mindtrackproject.repository.ReminderRepository;
+import com.web.mindtrackproject.service.factory.ReminderFactory;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.time.LocalDate;
@@ -13,9 +14,11 @@ import java.util.Optional;
 @AllArgsConstructor
 public class ReminderService {
     private final ReminderRepository reminderRepository;
+    private final ReminderFactory reminderFactory
 
     public Reminder createReminder(Reminder reminder) {
-        return reminderRepository.save(reminder);
+        Reminder reminderToCreate = reminder != null ? reminder : reminderFactory.createReminder();
+        return reminderRepository.save(reminderToCreate);
     }
 
     public void deleteReminder(Long id) {
