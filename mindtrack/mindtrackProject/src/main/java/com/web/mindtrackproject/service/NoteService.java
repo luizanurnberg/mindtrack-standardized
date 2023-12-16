@@ -4,6 +4,8 @@ import com.web.mindtrackproject.entity.Note;
 import com.web.mindtrackproject.repository.NoteRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import com.web.mindtrackproject.command.DeleteNoteCommand;
+import com.web.mindtrackproject.command.CommandInvoker;
 
 import java.util.List;
 import java.util.Optional;
@@ -12,12 +14,16 @@ import java.util.Optional;
 @AllArgsConstructor
 public class NoteService {
     private final NoteRepository noteRepository;
+    private final CommandInvoker commandInvoker;
 
     public Note createNote(Note note) {
         return noteRepository.save(note);
     }
 
-    public void deleteNote(Long id) {
+    public void deleteNoteWithConfirmation(Long id) {
+        commandInvoker.addToQueue(new DeleteNoteCommand(this, id));
+    }
+    public void deleteNoteInternal(Long id) {
         noteRepository.deleteById(id);
     }
 
