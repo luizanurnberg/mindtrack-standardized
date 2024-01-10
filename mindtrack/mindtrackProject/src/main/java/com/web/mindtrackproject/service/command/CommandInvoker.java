@@ -1,4 +1,4 @@
-package com.web.mindtrackproject.command;
+package com.web.mindtrackproject.service.command;
 
 import java.util.Queue;
 import org.springframework.stereotype.Component;

@@ -1,6 +1,5 @@
-package com.web.mindtrackproject.command;
+package com.web.mindtrackproject.service.command;
 
-import com.web.mindtrackproject.command.Command;
 import com.web.mindtrackproject.service.NoteService;
 import lombok.AllArgsConstructor;
 

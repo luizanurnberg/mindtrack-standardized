@@ -5,8 +5,8 @@ import com.web.mindtrackproject.repository.NoteRepository;
 import com.web.mindtrackproject.service.asbtractFactory.ColorFactory;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import com.web.mindtrackproject.command.DeleteNoteCommand;
-import com.web.mindtrackproject.command.CommandInvoker;
+import com.web.mindtrackproject.service.command.DeleteNoteCommand;
+import com.web.mindtrackproject.service.command.CommandInvoker;
 
 import java.util.List;
 import java.util.Optional;

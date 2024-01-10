@@ -1,6 +1,6 @@
 package com.web.mindtrackproject.controller;
 
-import com.web.mindtrackproject.command.CommandInvoker;
+import com.web.mindtrackproject.service.command.CommandInvoker;
 import com.web.mindtrackproject.entity.Note;
 import com.web.mindtrackproject.service.NoteService;
 import com.web.mindtrackproject.service.asbtractFactory.ColorFactory;

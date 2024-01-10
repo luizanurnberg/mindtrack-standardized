@@ -1,11 +1,41 @@
-import React from "react";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { Typography, Container, CssBaseline } from "@mui/material";
 import NotFoundGif from "../notFound/gif/404.gif";
+import React, { useEffect, useState } from "react";
 
 const theme = createTheme();
 
 function NotFoundPage() {
+
+  const [setServerMessage] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await await fetch(
+          `http://localhost:8080/api/404`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+
+        if (response.ok) {
+          throw new Error("Página não encontrada");
+        }
+        const content = await response.text();
+        setServerMessage(content);
+      } catch (error) {
+        console.error(error);
+        setServerMessage("Erro ao carregar a página do servidor.");
+      }
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
