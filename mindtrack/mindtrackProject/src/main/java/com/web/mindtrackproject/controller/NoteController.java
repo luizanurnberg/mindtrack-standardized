@@ -3,6 +3,8 @@ package com.web.mindtrackproject.controller;
 import com.web.mindtrackproject.command.CommandInvoker;
 import com.web.mindtrackproject.entity.Note;
 import com.web.mindtrackproject.service.NoteService;
+import com.web.mindtrackproject.service.asbtractFactory.ColorFactory;
+import com.web.mindtrackproject.service.asbtractFactory.ColorFactoryService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -66,18 +68,25 @@ public class NoteController {
         return ResponseEntity.notFound().build();
     }
 
+    private final ColorFactoryService colorFactoryService;
+
     @PutMapping("/color/{id}")
     public ResponseEntity<Note> updateNoteColor(
             @PathVariable Long id,
-            @RequestParam("color") String color
+            @RequestParam("color") String colorFactory
     ) {
-        Optional<Note> optionalNote = noteService.getNoteById(id);
-        System.out.println(color);
-        if (optionalNote.isPresent()) {
-            Note note = optionalNote.get();
-            note.setColor(color);
-            Note updatedColor = noteService.updateNoteColor(note);
-            return ResponseEntity.ok(updatedColor);
+        ColorFactory factory = colorFactoryService.createColorFactory(colorFactory);
+
+        if (factory != null) {
+            Optional<Note> optionalNote = noteService.getNoteById(id);
+
+            if (optionalNote.isPresent()) {
+                Note note = optionalNote.get();
+                String color = factory.createColor();
+                note.setColor(color);
+                Note updatedColor = noteService.updateNoteColor(note, factory);
+                return ResponseEntity.ok(updatedColor);
+            }
         }
 
         return ResponseEntity.notFound().build();

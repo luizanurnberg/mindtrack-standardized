@@ -52,6 +52,7 @@ function Login() {
           },
           body: formattedRequest,
         });
+        console.log(res);
         const result = await res.json();
         if (res.status === 200) {
           console.log(result);

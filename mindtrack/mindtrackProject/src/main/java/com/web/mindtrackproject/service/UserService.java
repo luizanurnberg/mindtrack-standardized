@@ -5,17 +5,15 @@ import com.web.mindtrackproject.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import com.web.mindtrackproject.service.NoteService;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
 @AllArgsConstructor
-public class UserService implements Observer{
+public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-    private final NoteService noteService;
 
     public List<User> getAllUsers() {
         return userRepository.findAll();
@@ -29,8 +27,6 @@ public class UserService implements Observer{
         String encryptedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(encryptedPassword);
         User savedUser = userRepository.save(user);
-        // Após criar o usuário, registre o UserService como observador
-        noteService.addObserver(savedUser);
         return savedUser;
     }
 
@@ -46,11 +42,5 @@ public class UserService implements Observer{
         } else {
             throw new Exception("Email e/ou senha inválidos.");
         }
-    }
-
-    @Override
-    public void update() {
-        //TODO
-        // Lógica para reagir a mudanças nas notas
     }
 }

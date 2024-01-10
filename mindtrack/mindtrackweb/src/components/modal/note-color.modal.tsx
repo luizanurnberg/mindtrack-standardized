@@ -5,8 +5,11 @@ import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import TextField from "@mui/material/TextField";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
+import { FormControl, InputLabel } from "@mui/material";
 
 const NoteColorModal = ({ isOpen, onClose, noteId, color }) => {
   const [newColor, setNewColor] = useState("");
@@ -34,11 +37,8 @@ const NoteColorModal = ({ isOpen, onClose, noteId, color }) => {
   };
 
   async function handleColorChange(noteId, colorSelect) {
+    const hexColor = colorSelect;
 
-  console.log(colorSelect);
-
-  const hexColor = colorSelect.substring(1);
-  
     try {
       const response = await fetch(
         `http://localhost:8080/api/note/color/${noteId}?color=${hexColor}`,
@@ -86,12 +86,24 @@ const NoteColorModal = ({ isOpen, onClose, noteId, color }) => {
         <Typography id="modal-title" variant="h6" component="h2">
           Escolha sua cor
         </Typography>
-        <input
-          type="color"
-          value={newColor}
-          onChange={(e) => setNewColor(String(e.target.value))}
-          style={{ margin: "10px" }}
-        />
+        <FormControl sx={{ margin: '10px', paddingTop: '5px' }}>
+          <InputLabel htmlFor="color-select">Selecione a Cor</InputLabel>
+          <Select
+            value={newColor}
+            onChange={(e) => setNewColor(e.target.value)}
+            inputProps={{
+              name: 'color',
+              id: 'color-select',
+            }}
+            sx={{ width: '200px' }}
+          >
+            <MenuItem value="" disabled>
+              Selecione a Cor
+            </MenuItem>
+            <MenuItem value="Blue">Azul</MenuItem>
+            <MenuItem value="Red">Vermelho</MenuItem>
+          </Select>
+        </FormControl>
         <Button
           variant="contained"
           color="primary"

@@ -45,3 +45,10 @@ Este é um projeto de um sistema de gerenciamento de tarefas e notas, desenvolvi
 | RN005 | Ao restaurar uma nota excluída, ela retorna para a rotina de notas. | 1.0 |
 | RN006 | Os usuários podem adicionar, editar e excluir itens de tarefas em uma lista. | 1.0 |
 | RN007 | Os usuários devem fornecer informações de cadastro válidas. | 1.0 |
+
+## Instalação
+
+1. Clone este repositório.
+
+---
+Este projeto foi desenvolvido por Eduardo Schork, Luíza Nurnberg e Maria Cecilia Holler. 
