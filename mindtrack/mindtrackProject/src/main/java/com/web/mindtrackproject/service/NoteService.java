@@ -2,6 +2,7 @@ package com.web.mindtrackproject.service;
 
 import com.web.mindtrackproject.entity.Note;
 import com.web.mindtrackproject.repository.NoteRepository;
+import com.web.mindtrackproject.service.asbtractFactory.Color;
 import com.web.mindtrackproject.service.asbtractFactory.ColorFactory;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -44,12 +45,13 @@ public class NoteService {
 
     public Note updateNoteColor(Note note, ColorFactory colorFactory) {
         if (noteRepository.existsById(note.getId())) {
-            String color = colorFactory.createColor();
-            note.setColor(color);
+            Color color = colorFactory.createColor();
+            note.setColorCode(color.getColorCode());
             return noteRepository.save(note);
         }
         return null;
     }
+
 
     public Note updateNoteContent(Note note) {
         if (noteRepository.existsById(note.getId())) {

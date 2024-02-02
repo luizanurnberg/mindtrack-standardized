@@ -1,5 +1,5 @@
 package com.web.mindtrackproject.service.asbtractFactory;
 
-public interface ColorFactory {
-    Color createColor();
+public interface Color {
+    String getColorCode();
 }

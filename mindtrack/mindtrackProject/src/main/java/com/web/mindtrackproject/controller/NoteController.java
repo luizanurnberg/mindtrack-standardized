@@ -1,5 +1,6 @@
 package com.web.mindtrackproject.controller;
 
+import com.web.mindtrackproject.service.asbtractFactory.Color;
 import com.web.mindtrackproject.service.command.CommandInvoker;
 import com.web.mindtrackproject.entity.Note;
 import com.web.mindtrackproject.service.NoteService;
@@ -69,7 +70,6 @@ public class NoteController {
     }
 
     private final ColorFactoryService colorFactoryService;
-
     @PutMapping("/color/{id}")
     public ResponseEntity<Note> updateNoteColor(
             @PathVariable Long id,
@@ -82,8 +82,8 @@ public class NoteController {
 
             if (optionalNote.isPresent()) {
                 Note note = optionalNote.get();
-                String color = factory.createColor();
-                note.setColor(color);
+                Color color = factory.createColor();
+                note.setColor(color.getColorCode());
                 Note updatedColor = noteService.updateNoteColor(note, factory);
                 return ResponseEntity.ok(updatedColor);
             }
@@ -91,6 +91,7 @@ public class NoteController {
 
         return ResponseEntity.notFound().build();
     }
+
 
     @PutMapping("/content/{id}")
     public ResponseEntity<Note> updateNoteContent(

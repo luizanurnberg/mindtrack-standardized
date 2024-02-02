@@ -1,5 +1,6 @@
 package com.web.mindtrackproject.entity;
 
+import com.web.mindtrackproject.service.asbtractFactory.Color;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -32,5 +33,10 @@ public class Note {
 
     @Column(name = "fk_id_user")
     private Long userId;
+
+    public void setColorCode(String colorCode) {
+        this.color = colorCode;
+    }
+
 }
 
