@@ -17,11 +17,27 @@ import java.util.Optional;
 @AllArgsConstructor
 public class LabelController {
     private final LabelService labelService;
+    LabelObserver labelObs = new LabelObserver() {
+        @Override
+        public Label updateLabelName(Label label) {
+            return null;
+        }
+
+        @Override
+        public Label updateLabelStatus(Label label) {
+            return null;
+        }
+
+        @Override
+        public Label createLabel(Label label) {
+            return null;
+        }
+    };
 
     @PostMapping
     public ResponseEntity<Label> createLabel(@RequestBody Label label) {
         Label createdLabel = labelService.createLabel(label);
-        //labelService.registerObserver((LabelObserver) label);
+        labelService.registerObserver(labelObs);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdLabel);
     }
 

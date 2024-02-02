@@ -61,19 +61,19 @@ public class LabelService implements LabelObserver {
 
     private void notifyObserversForStatusUpdate(Label label) {
         for (LabelObserver observer : labelObservers) {
-            observer.updateLabelStatus(label);
+            System.out.println("Etiqueta alterada");
         }
     }
 
     private void notifyObserversForNameUpdate(Label label) {
         for (LabelObserver observer : labelObservers) {
-            observer.updateLabelName(label);
+            System.out.println("Alterado nome da Etiqueta");
         }
     }
 
     private void notifyObserversForCreate(Label label) {
         for (LabelObserver observer : labelObservers) {
-            observer.createLabel(label);
+            System.out.println("Etiqueta criada com sucesso");
         }
     }
 

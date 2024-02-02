@@ -86,11 +86,16 @@ function TracklistPage() {
         body: JSON.stringify(trackListData),
       });
 
+      setTimeout(() => {
+        window.location.reload();
+      }, 100);
       if (response.ok) {
         toast.success("Lista de Tarefa inserido com sucesso!", {
           position: "bottom-right",
         });
-        window.location.reload();
+        setTimeout(() => {
+          window.location.reload();
+        }, 100);
       } else {
         toast.error(
           "Ocorreu um erro ao criar seus Lista de Tarefas, tente novamente!",
