@@ -105,6 +105,7 @@ function LabelPage() {
         toast.success("Etiqueta movida para lixeira com sucesso!", {
           position: "bottom-right",
         });
+        window.location.reload();
       } else {
         toast.error(
           "Ocorreu um erro ao mover sua Etiqueta para a lixeira, tente novamente!",

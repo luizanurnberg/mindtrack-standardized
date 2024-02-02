@@ -5,6 +5,9 @@ import com.web.mindtrackproject.repository.LabelRepository;
 import com.web.mindtrackproject.service.observer.LabelObserver;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +18,8 @@ import java.util.Optional;
 public class LabelService implements LabelObserver {
     private final LabelRepository labelRepository;
     private final List<LabelObserver> labelObservers = new ArrayList<>();
+    private final Log logger = LogFactory.getLog(LabelService.class);
+
 
     public void registerObserver(LabelObserver observer) {
         labelObservers.add(observer);
@@ -61,19 +66,19 @@ public class LabelService implements LabelObserver {
 
     private void notifyObserversForStatusUpdate(Label label) {
         for (LabelObserver observer : labelObservers) {
-            System.out.println("Etiqueta alterada");
+            logger.info("Etiqueta alterada");
         }
     }
 
     private void notifyObserversForNameUpdate(Label label) {
         for (LabelObserver observer : labelObservers) {
-            System.out.println("Alterado nome da Etiqueta");
+            logger.info("Alterado nome da Etiqueta");
         }
     }
 
     private void notifyObserversForCreate(Label label) {
         for (LabelObserver observer : labelObservers) {
-            System.out.println("Etiqueta criada com sucesso");
+            logger.info("Etiqueta criada com sucesso");
         }
     }
 

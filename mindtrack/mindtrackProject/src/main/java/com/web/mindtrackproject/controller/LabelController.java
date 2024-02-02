@@ -19,9 +19,7 @@ public class LabelController {
     private final LabelService labelService;
     LabelObserver labelObs = new LabelObserver() {
         @Override
-        public Label updateLabelName(Label label) {
-            return null;
-        }
+        public Label updateLabelName(Label label) { return null; }
 
         @Override
         public Label updateLabelStatus(Label label) {
