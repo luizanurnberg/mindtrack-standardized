@@ -3,6 +3,7 @@ package com.web.mindtrackproject.controller;
 import com.web.mindtrackproject.entity.Label;
 import com.web.mindtrackproject.entity.Note;
 import com.web.mindtrackproject.service.LabelService;
+import com.web.mindtrackproject.service.observer.LabelObserver;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,7 @@ public class LabelController {
     @PostMapping
     public ResponseEntity<Label> createLabel(@RequestBody Label label) {
         Label createdLabel = labelService.createLabel(label);
+        //labelService.registerObserver((LabelObserver) label);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdLabel);
     }
 
