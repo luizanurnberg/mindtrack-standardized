@@ -16,7 +16,7 @@ function TracklistPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingTrackListId, setEditingTrackListId] = useState(null);
 
-  const handleAddCheckbox = () => {
+  async function handleAddCheckbox() {
     if (newTask.trim() !== "") {
       const newCheckbox = {
         id: Date.now(),
@@ -27,13 +27,13 @@ function TracklistPage() {
       setTracklists((prevTracklists) => [...prevTracklists, newCheckbox]);
       setNewTask("");
 
-      handleAddTrackList(newCheckbox)
+      await handleAddTrackList(newCheckbox)
         .then(() => {})
         .catch((error) => {
           console.error("Error adding task to the database:", error);
         });
     }
-  };
+  }
 
   useEffect(() => {
     fetchTracklists();
@@ -67,7 +67,7 @@ function TracklistPage() {
     }
   };
 
-  const handleAddTrackList = async (newCheckbox) => {
+  async function handleAddTrackList(newCheckbox) {
     try {
       const currentDate = new Date();
       const trackListData = {
@@ -87,14 +87,13 @@ function TracklistPage() {
       });
 
       if (response.ok) {
-        const data = await response.json();
-        console.log(data);
-        toast.success("Lembrete inserido com sucesso!", {
+        toast.success("Lista de Tarefa inserido com sucesso!", {
           position: "bottom-right",
         });
+        window.location.reload();
       } else {
         toast.error(
-          "Ocorreu um erro ao criar seus Lembretes, tente novamente!",
+          "Ocorreu um erro ao criar seus Lista de Tarefas, tente novamente!",
           {
             position: "bottom-right",
           }
@@ -102,13 +101,14 @@ function TracklistPage() {
       }
     } catch (error) {
       toast.error(
-        "Ocorreu um erro ao criar seus Lembretes, tente novamente!" + error,
+        "Ocorreu um erro ao criar seus Lista de Tarefas, tente novamente!" +
+          error,
         {
           position: "bottom-right",
         }
       );
     }
-  };
+  }
 
   const handleDeleteTracklist = async (tracklistId) => {
     try {

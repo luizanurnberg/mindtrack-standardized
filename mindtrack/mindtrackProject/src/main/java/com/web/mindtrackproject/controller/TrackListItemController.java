@@ -4,6 +4,7 @@ import com.web.mindtrackproject.entity.Reminder;
 import com.web.mindtrackproject.entity.TrackListItem;
 import com.web.mindtrackproject.service.ReminderService;
 import com.web.mindtrackproject.service.TrackListItemService;
+import com.web.mindtrackproject.service.facade.TrackingListItemFacade;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,29 +17,29 @@ import java.util.Optional;
 @RequestMapping("/api/trackListItem")
 @AllArgsConstructor
 public class TrackListItemController {
-    private final TrackListItemService trackListItemService;
+    private TrackingListItemFacade trackingListItemFacade;
 
     @PostMapping
     public ResponseEntity<TrackListItem> createTrackListItem(@RequestBody TrackListItem trackListItem) {
-        TrackListItem createdTrackListItem = trackListItemService.createTrackListItem(trackListItem);
+        TrackListItem createdTrackListItem = trackingListItemFacade.createTrackListItem(trackListItem);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdTrackListItem);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteTrackListItem(@PathVariable Long id) {
-        trackListItemService.deleteTrackListItem(id);
+        trackingListItemFacade.deleteTrackListItem(id);
         return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<TrackListItem> getTrackListItemById(@PathVariable Long id) {
-        Optional<TrackListItem> trackListItem = trackListItemService.getTrackListItemById(id);
+        Optional<TrackListItem> trackListItem = trackingListItemFacade.getTrackListItemById(id);
         return trackListItem.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @GetMapping("/user/{userId}")
     public ResponseEntity<List<TrackListItem>> getAllTrackListItemForUser(@PathVariable Long userId) {
-        List<TrackListItem> userTrackListItem = trackListItemService.getAllTrackListItemForUser(userId);
+        List<TrackListItem> userTrackListItem = trackingListItemFacade.getAllTrackListItemForUser(userId);
         return ResponseEntity.status(200).body(userTrackListItem);
     }
 
@@ -47,17 +48,16 @@ public class TrackListItemController {
             @PathVariable Long id,
             @RequestParam("status") String status
     ) {
-        Optional<TrackListItem> optionalTrackListItem = trackListItemService.getTrackListItemById(id);
+        Optional<TrackListItem> optionalTrackListItem = trackingListItemFacade.getTrackListItemById(id);
 
         if (optionalTrackListItem.isPresent()) {
             TrackListItem trackListItem = optionalTrackListItem.get();
             trackListItem.setStatus(status);
-            TrackListItem updatedTrackListItem = trackListItemService.updateTrackListItemStatus(trackListItem);
+            TrackListItem updatedTrackListItem = trackingListItemFacade.updateTrackListItemStatus(trackListItem);
             return ResponseEntity.ok(updatedTrackListItem);
         }
 
         return ResponseEntity.notFound().build();
-        
     }
 
     @PutMapping("/content/{id}")
@@ -65,12 +65,12 @@ public class TrackListItemController {
             @PathVariable Long id,
             @RequestParam("content") String content
     ) {
-        Optional<TrackListItem> optionalTrackListItem = trackListItemService.getTrackListItemById(id);
+        Optional<TrackListItem> optionalTrackListItem = trackingListItemFacade.getTrackListItemById(id);
 
         if (optionalTrackListItem.isPresent()) {
             TrackListItem trackListItem = optionalTrackListItem.get();
             trackListItem.setContent(content);
-            TrackListItem updatedTrackListItem = trackListItemService.updateTrackListItemContent(trackListItem);
+            TrackListItem updatedTrackListItem = trackingListItemFacade.updateTrackListItemContent(trackListItem);
             return ResponseEntity.ok(updatedTrackListItem);
         }
 
@@ -81,12 +81,12 @@ public class TrackListItemController {
             @PathVariable Long id,
             @RequestParam("checkbox") Boolean checkbox
     ) {
-        Optional<TrackListItem> optionalTrackListItem = trackListItemService.getTrackListItemById(id);
+        Optional<TrackListItem> optionalTrackListItem = trackingListItemFacade.getTrackListItemById(id);
 
         if (optionalTrackListItem.isPresent()) {
             TrackListItem trackListItem = optionalTrackListItem.get();
             trackListItem.setStatusCheckbox(checkbox);
-            TrackListItem updatedTrackListItem = trackListItemService.updateTrackListItemStatusCheckbox(trackListItem);
+            TrackListItem updatedTrackListItem = trackingListItemFacade.updateTrackListItemStatusCheckbox(trackListItem);
             return ResponseEntity.ok(updatedTrackListItem);
         }
 
@@ -94,7 +94,7 @@ public class TrackListItemController {
     }
     @PutMapping("/{id}")
     public ResponseEntity<TrackListItem> updateTrackListItem(@PathVariable Long id, @RequestBody TrackListItem trackListItem) {
-        TrackListItem updatedTrackListItem = trackListItemService.updateTrackListItem(id, trackListItem);
+        TrackListItem updatedTrackListItem = trackingListItemFacade.updateTrackListItem(id, trackListItem);
         if (updatedTrackListItem != null) {
             return ResponseEntity.ok(updatedTrackListItem);
         }
